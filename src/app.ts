@@ -23,7 +23,7 @@ import { RedisService } from './services/redis';
 		const connection: Connection = await createConnection();
 
 		// Connect redis
-		RedisService.connect();
+		//RedisService.connect();
 
 		// Init express server
 		const app: express.Application = new Server().app;
