@@ -27,7 +27,7 @@ const redis_1 = require("./services/redis");
             logger_1.logger.info('Initializing ORM connection...');
             const connection = yield typeorm_1.createConnection();
             // Connect redis
-            redis_1.RedisService.connect();
+            //RedisService.connect();
             // Init express server
             const app = new server_1.Server().app;
             const server = http_1.createServer(app);
