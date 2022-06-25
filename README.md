@@ -1,11 +1,11 @@
 # NOut-API
 
 ## get started
-npm install
+1.  npm install
 
-npm run build
+2. npm run build
 
-npm start
+3. npm start
 
 ## Reference code
 https://github.com/larswaechter/expressjs-api
