@@ -28,10 +28,10 @@ export class UserRoutes implements IComponentRoutes<UserController> {
 
 		this.router.get(
 			'/search',
-			this.authSerivce.isAuthorized(),
-			this.authSerivce.hasPermission(this.name, 'read'),
+			//this.authSerivce.isAuthorized(),
+			//this.authSerivce.hasPermission(this.name, 'read'),
 			query('email').isString(),
-			this.authSerivce.validateRequest,
+			//this.authSerivce.validateRequest,
 			this.controller.readUserByEmail
 		);
 
@@ -39,9 +39,9 @@ export class UserRoutes implements IComponentRoutes<UserController> {
 			'/:userID',
 			this.authSerivce.isAuthorized(),
 			this.authSerivce.hasPermission(this.name, 'read'),
-			param('userID').isNumeric(),
+			//param('userID').isNumeric(),
 			this.authSerivce.validateRequest,
-			this.controller.readUser
+			this.controller.addUserInterest
 		);
 
 		this.router.post(
@@ -57,6 +57,7 @@ export class UserRoutes implements IComponentRoutes<UserController> {
 			this.controller.createUser
 		);
 
+		
 		this.router.put(
 			'/:userID',
 			this.authSerivce.isAuthorized(),
@@ -79,5 +80,16 @@ export class UserRoutes implements IComponentRoutes<UserController> {
 			this.authSerivce.validateRequest,
 			this.controller.deleteUser
 		);
+
+		this.router.post(
+			'/interests/:userID',
+			this.authSerivce.isAuthorized(),
+			this.authSerivce.hasPermission(this.name, 'create'),
+			//param('userID').isNumeric(),
+			body('interestName').isString(),
+			this.authSerivce.validateRequest,
+			this.controller.addUserInterest
+		);
+
 	}
 }

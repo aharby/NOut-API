@@ -1,7 +1,8 @@
 import { nanoid } from 'nanoid';
-import { Column, CreateDateColumn, Entity, PrimaryColumn, Timestamp, OneToOne, JoinColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryColumn, Timestamp, OneToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
 
 import { Address } from '../address/model';
+import { Interest } from '../interest/model';
 
 @Entity()
 export class User {
@@ -49,6 +50,10 @@ export class User {
 	@OneToOne(() => Address)
     @JoinColumn()
     address: Address;
+
+	@ManyToMany(() => Interest)
+    @JoinTable()
+    interests: Interest[];
 	
 	public static mockTestUser(): User {
 		const user = new User( 'test@email.com', 'testFirstname', 'testLastname', 'testPassword', true);

@@ -6,8 +6,12 @@ import { UtilityService } from '../../../services/utility';
 import { User } from './model';
 import { UserRepository } from './repository';
 
+import { Interest } from '../interest/model';
+import { InterestRepository } from '../interest/repository';
+
 export class UserController {
 	private readonly repo: UserRepository = new UserRepository();
+	private readonly interestRepo: InterestRepository = new InterestRepository();
 
 	/**
 	 * Read users
@@ -43,7 +47,7 @@ export class UserController {
 
 			const user: User | undefined = await this.repo.read({
 				where: {
-					id: +userID
+					id: userID
 				}
 			});
 
@@ -132,7 +136,7 @@ export class UserController {
 
 			const existingUser: User | undefined = await this.repo.read({
 				where: {
-					id: +userID
+					id: userID
 				}
 			});
 
@@ -169,7 +173,7 @@ export class UserController {
 
 			const user: User | undefined = await this.repo.read({
 				where: {
-					id: +userID
+					id: userID
 				}
 			});
 
@@ -180,6 +184,35 @@ export class UserController {
 			await this.repo.delete(user);
 
 			return res.status(204).send();
+		} catch (err) {
+			return next(err);
+		}
+	}
+
+	@bind
+	async addUserInterest(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+		try {
+			const { userID } = req.params;
+			const { interestName } = req.body;
+
+			const user: User | undefined = await this.repo.read({
+				where: {
+					id: userID
+				}
+			});
+			
+
+			const interest: Interest | undefined = await this.interestRepo.read({
+				where: {
+					name: interestName
+				}
+			});
+			
+			user.interests = [interest];
+			
+			await this.repo.save(user);
+
+			return res.json(user);
 		} catch (err) {
 			return next(err);
 		}

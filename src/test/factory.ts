@@ -8,14 +8,12 @@ import { config } from 'dotenv';
 config();
 
 import { createConnection, ConnectionOptions, Connection } from 'typeorm';
-import { createServer, Server as HttpServer } from 'http';
 
 import express from 'express';
 import supertest from 'supertest';
 
 import { env } from '../config/globals';
 
-import { Server } from '../api/server';
 import { RedisService } from '../services/redis';
 
 /**
@@ -25,9 +23,8 @@ import { RedisService } from '../services/redis';
  */
 
 export class TestFactory {
-	private _app: express.Application;
+	private _app= express();
 	private _connection: Connection;
-	private _server: HttpServer;
 
 	// DB connection options
 	private options: ConnectionOptions = {
@@ -47,31 +44,25 @@ export class TestFactory {
 		return this._connection;
 	}
 
-	public get server(): HttpServer {
-		return this._server;
-	}
-
 	public async init(): Promise<void> {
 		// logger.info('Running startup for test case');
 		await this.startup();
 	}
 
 	/**
-	 * Close server and DB connection
+	 * Close DB connection
 	 */
 	public async close(): Promise<void> {
-		this._server.close();
 		this._connection.close();
 		RedisService.disconnect();
 	}
 
 	/**
-	 * Connect to DB and start server
+	 * Connect to DB and start express app
 	 */
 	private async startup(): Promise<void> {
 		this._connection = await createConnection(this.options);
 		RedisService.connect();
-		this._app = new Server().app;
-		this._server = createServer(this._app).listen(env.NODE_PORT);
+		this._app.listen(env.NODE_PORT);
 	}
 }

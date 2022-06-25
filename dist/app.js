@@ -8,16 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 // Set env variables from .env file
 const dotenv_1 = require("dotenv");
 dotenv_1.config();
-const http_1 = require("http");
+const express_1 = __importDefault(require("express"));
+const routes_1 = require("./api/routes");
 const typeorm_1 = require("typeorm");
 const globals_1 = require("./config/globals");
 const logger_1 = require("./config/logger");
-const server_1 = require("./api/server");
 const redis_1 = require("./services/redis");
 // Startup
 (function main() {
@@ -27,19 +30,13 @@ const redis_1 = require("./services/redis");
             logger_1.logger.info('Initializing ORM connection...');
             const connection = yield typeorm_1.createConnection();
             // Connect redis
-            //RedisService.connect();
-            // Init express server
-            const app = new server_1.Server().app;
-            const server = http_1.createServer(app);
-            // Start express server
-            server.listen(globals_1.env.NODE_PORT);
-            server.on('listening', () => {
-                logger_1.logger.info(`node server is listening on port ${globals_1.env.NODE_PORT} in ${globals_1.env.NODE_ENV} mode`);
-            });
-            server.on('close', () => {
-                connection.close();
-                redis_1.RedisService.disconnect();
-                logger_1.logger.info('node server closed');
+            redis_1.RedisService.connect();
+            // Init express app and routes
+            const app = express_1.default();
+            routes_1.initRestRoutes(app);
+            const port = globals_1.env.NODE_PORT;
+            app.listen(port, () => {
+                logger_1.logger.info(`Example app listening on port ${port} in ${globals_1.env.NODE_ENV} mode`);
             });
         }
         catch (err) {

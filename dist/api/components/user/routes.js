@@ -15,11 +15,21 @@ class UserRoutes {
     }
     initRoutes() {
         this.router.get('/', this.authSerivce.isAuthorized(), this.authSerivce.hasPermission(this.name, 'read'), this.controller.readUsers);
-        this.router.get('/search', this.authSerivce.isAuthorized(), this.authSerivce.hasPermission(this.name, 'read'), express_validator_1.query('email').isString(), this.authSerivce.validateRequest, this.controller.readUserByEmail);
-        this.router.get('/:userID', this.authSerivce.isAuthorized(), this.authSerivce.hasPermission(this.name, 'read'), express_validator_1.param('userID').isNumeric(), this.authSerivce.validateRequest, this.controller.readUser);
+        this.router.get('/search', 
+        //this.authSerivce.isAuthorized(),
+        //this.authSerivce.hasPermission(this.name, 'read'),
+        express_validator_1.query('email').isString(), 
+        //this.authSerivce.validateRequest,
+        this.controller.readUserByEmail);
+        this.router.get('/:userID', this.authSerivce.isAuthorized(), this.authSerivce.hasPermission(this.name, 'read'), 
+        //param('userID').isNumeric(),
+        this.authSerivce.validateRequest, this.controller.addUserInterest);
         this.router.post('/', this.authSerivce.isAuthorized(), this.authSerivce.hasPermission(this.name, 'create'), express_validator_1.body('email').isEmail(), express_validator_1.body('firstname').isString(), express_validator_1.body('lastname').isString(), express_validator_1.body('password').isString(), express_validator_1.body('active').isBoolean(), this.authSerivce.validateRequest, this.controller.createUser);
         this.router.put('/:userID', this.authSerivce.isAuthorized(), this.authSerivce.hasPermission(this.name, 'update'), express_validator_1.param('userID').isNumeric(), express_validator_1.body('email').isEmail(), express_validator_1.body('firstname').isString(), express_validator_1.body('lastname').isString(), express_validator_1.body('password').isString(), express_validator_1.body('active').isBoolean(), this.authSerivce.validateRequest, this.controller.updateUser);
         this.router.delete('/:userID', this.authSerivce.isAuthorized(), this.authSerivce.hasPermission(this.name, 'delete'), express_validator_1.param('userID').isNumeric(), this.authSerivce.validateRequest, this.controller.deleteUser);
+        this.router.post('/interests/:userID', this.authSerivce.isAuthorized(), this.authSerivce.hasPermission(this.name, 'create'), 
+        //param('userID').isNumeric(),
+        express_validator_1.body('interestName').isString(), this.authSerivce.validateRequest, this.controller.addUserInterest);
     }
 }
 exports.UserRoutes = UserRoutes;

@@ -20,10 +20,9 @@ process.env.NODE_ENV = 'test';
 const dotenv_1 = require("dotenv");
 dotenv_1.config();
 const typeorm_1 = require("typeorm");
-const http_1 = require("http");
+const express_1 = __importDefault(require("express"));
 const supertest_1 = __importDefault(require("supertest"));
 const globals_1 = require("../config/globals");
-const server_1 = require("../api/server");
 const redis_1 = require("../services/redis");
 /**
  * TestFactory
@@ -32,6 +31,7 @@ const redis_1 = require("../services/redis");
  */
 class TestFactory {
     constructor() {
+        this._app = express_1.default();
         // DB connection options
         this.options = {
             type: 'sqljs',
@@ -48,9 +48,6 @@ class TestFactory {
     get connection() {
         return this._connection;
     }
-    get server() {
-        return this._server;
-    }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
             // logger.info('Running startup for test case');
@@ -58,24 +55,22 @@ class TestFactory {
         });
     }
     /**
-     * Close server and DB connection
+     * Close DB connection
      */
     close() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._server.close();
             this._connection.close();
             redis_1.RedisService.disconnect();
         });
     }
     /**
-     * Connect to DB and start server
+     * Connect to DB and start express app
      */
     startup() {
         return __awaiter(this, void 0, void 0, function* () {
             this._connection = yield typeorm_1.createConnection(this.options);
             redis_1.RedisService.connect();
-            this._app = new server_1.Server().app;
-            this._server = http_1.createServer(this._app).listen(globals_1.env.NODE_PORT);
+            this._app.listen(globals_1.env.NODE_PORT);
         });
     }
 }

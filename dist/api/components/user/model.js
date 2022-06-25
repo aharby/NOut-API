@@ -14,6 +14,7 @@ exports.User = void 0;
 const nanoid_1 = require("nanoid");
 const typeorm_1 = require("typeorm");
 const model_1 = require("../address/model");
+const model_2 = require("../interest/model");
 let User = User_1 = class User {
     constructor(email, firstname, lastname, password, active) {
         this.id = nanoid_1.nanoid();
@@ -71,6 +72,11 @@ __decorate([
     typeorm_1.JoinColumn(),
     __metadata("design:type", model_1.Address)
 ], User.prototype, "address", void 0);
+__decorate([
+    typeorm_1.ManyToMany(() => model_2.Interest),
+    typeorm_1.JoinTable(),
+    __metadata("design:type", Array)
+], User.prototype, "interests", void 0);
 User = User_1 = __decorate([
     typeorm_1.Entity(),
     __metadata("design:paramtypes", [String, String, String, String, Boolean])

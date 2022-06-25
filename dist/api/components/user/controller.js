@@ -23,9 +23,11 @@ const decko_1 = require("decko");
 const utility_1 = require("../../../services/utility");
 const model_1 = require("./model");
 const repository_1 = require("./repository");
+const repository_2 = require("../interest/repository");
 class UserController {
     constructor() {
         this.repo = new repository_1.UserRepository();
+        this.interestRepo = new repository_2.InterestRepository();
     }
     /**
      * Read users
@@ -60,7 +62,7 @@ class UserController {
                 const { userID } = req.params;
                 const user = yield this.repo.read({
                     where: {
-                        id: +userID
+                        id: userID
                     }
                 });
                 return res.json(user);
@@ -137,7 +139,7 @@ class UserController {
                 }
                 const existingUser = yield this.repo.read({
                     where: {
-                        id: +userID
+                        id: userID
                     }
                 });
                 if (!existingUser) {
@@ -170,7 +172,7 @@ class UserController {
                 const { userID } = req.params;
                 const user = yield this.repo.read({
                     where: {
-                        id: +userID
+                        id: userID
                     }
                 });
                 if (!user) {
@@ -178,6 +180,30 @@ class UserController {
                 }
                 yield this.repo.delete(user);
                 return res.status(204).send();
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+    }
+    addUserInterest(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userID } = req.params;
+                const { interestName } = req.body;
+                const user = yield this.repo.read({
+                    where: {
+                        id: userID
+                    }
+                });
+                const interest = yield this.interestRepo.read({
+                    where: {
+                        name: interestName
+                    }
+                });
+                user.interests = [interest];
+                yield this.repo.save(user);
+                return res.json(user);
             }
             catch (err) {
                 return next(err);
@@ -221,5 +247,11 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object, Function]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "deleteUser", null);
+__decorate([
+    decko_1.bind,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Function]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "addUserInterest", null);
 exports.UserController = UserController;
 //# sourceMappingURL=controller.js.map
