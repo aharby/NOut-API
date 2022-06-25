@@ -7,6 +7,9 @@
 	"repository": "https://github.com/larswaechter/expressjs-api",
 	"main": "./dist/app.js",
 	"private": true,
+	"engines": {
+		"node": "6.11.1"
+	  },	
 	"scripts": {
 		"deploy": "npm ci && npm run build && npm run start:prod",
 		"start": "node ./dist/app.js",
