@@ -11,8 +11,8 @@ export class RedisService {
 	 */
 	static connect() {
 		this.client = createClient({
-			url: env.REDIS_URL|| null,
-			password: env.REDIS_PASSWORD|| null
+			url: env.REDIS_URL,
+			password: env.REDIS_PASSWORD
 		});
 		
 	}
