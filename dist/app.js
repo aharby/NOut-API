@@ -21,6 +21,7 @@ const routes_1 = require("./api/routes");
 const typeorm_1 = require("typeorm");
 const globals_1 = require("./config/globals");
 const logger_1 = require("./config/logger");
+const redis_1 = require("./services/redis");
 // Startup
 (function main() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -29,7 +30,7 @@ const logger_1 = require("./config/logger");
             console.log('Initializing ORM connection...');
             const connection = yield typeorm_1.createConnection();
             // Connect redis
-            //RedisService.connect();
+            redis_1.RedisService.connect();
             // Init express app and routes
             const app = express_1.default();
             routes_1.initRestRoutes(app);
