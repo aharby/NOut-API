@@ -10,7 +10,11 @@ export class RedisService {
 	 * Connect to Redis
 	 */
 	static connect() {
-		this.client = createClient(env.REDIS_URL);
+		this.client = createClient({
+			url: env.REDIS_URL,
+			password: env.REDIS_PASSWORD
+		});
+		
 	}
 
 	/**

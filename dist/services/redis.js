@@ -18,7 +18,10 @@ class RedisService {
      * Connect to Redis
      */
     static connect() {
-        this.client = redis_1.createClient(globals_1.env.REDIS_URL);
+        this.client = redis_1.createClient({
+            url: globals_1.env.REDIS_URL,
+            password: globals_1.env.REDIS_PASSWORD
+        });
     }
     /**
      * Disconnect from Redis
