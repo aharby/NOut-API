@@ -3,7 +3,7 @@ import 'reflect-metadata';
 // Set env variables from .env file
 
 import { config } from 'dotenv';
-if (process.env.NODE_ENV !== 'production') config();
+config();
 
 import express from 'express';
 import { initRestRoutes } from './api/routes';
@@ -21,7 +21,6 @@ import { RedisService } from './services/redis';
 		// Connect db
 		console.log('Initializing ORM connection...');
 		const connection: Connection = await createConnection();
-		console.log('connencted ORM connection...');
 
 
 		// Connect redis
