@@ -27,13 +27,10 @@ import { RedisService } from './services/redis';
 		// Init express app and routes
 		const app = express();
 		
-app.get('/api/v1/', (req, res) => {
-	res.send('Hello World!')
-  })
-		//initRestRoutes(app);
+		initRestRoutes(app);
 
 		const port = env.NODE_PORT;
-		
+
 		app.listen(port, () => {
 			logger.info(`Example app listening on port ${port} in ${env.NODE_ENV} mode`)
 		  }); 
