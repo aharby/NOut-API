@@ -19,14 +19,18 @@ import { RedisService } from './services/redis';
 	try {
 		// Connect db
 		logger.info('Initializing ORM connection...');
-		const connection: Connection = await createConnection();
+		//const connection: Connection = await createConnection();
 
 		// Connect redis
 		//RedisService.connect();
 
 		// Init express app and routes
 		const app = express();
-		initRestRoutes(app);
+		
+app.get('/api/v1/', (req, res) => {
+	res.send('Hello World!')
+  })
+		//initRestRoutes(app);
 
 		const port = env.NODE_PORT;
 		app.listen(port, () => {

@@ -15,6 +15,7 @@
 		"start": "node ./dist/app.js",
 		"start-docker": "npm run build && npm start",
 		"build": "rm -rf dist && tsc -p tsconfig.json && gulp copy && gulp merge",
+		"build-local": "del /q dist && tsc -p tsconfig.json && gulp copy && gulp merge",
 		"watch": "nodemon --exec \"npm run build && npm run start\" --watch src --ext ts",
 		"watch-dirty": "nodemon --exec \"tsc -p tsconfig.json && npm run start\" --watch src --ext ts",
 		"test": "npm run build && mocha",
