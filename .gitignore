@@ -109,4 +109,4 @@ dist
 .github
 
 #env
-.env
+#.env
