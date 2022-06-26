@@ -33,6 +33,7 @@ app.get('/api/v1/', (req, res) => {
 		//initRestRoutes(app);
 
 		const port = env.NODE_PORT;
+		
 		app.listen(port, () => {
 			logger.info(`Example app listening on port ${port} in ${env.NODE_ENV} mode`)
 		  }); 
