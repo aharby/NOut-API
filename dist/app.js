@@ -17,6 +17,8 @@ require("reflect-metadata");
 const dotenv_1 = require("dotenv");
 dotenv_1.config();
 const express_1 = __importDefault(require("express"));
+const routes_1 = require("./api/routes");
+const typeorm_1 = require("typeorm");
 const globals_1 = require("./config/globals");
 const logger_1 = require("./config/logger");
 // Startup
@@ -24,19 +26,17 @@ const logger_1 = require("./config/logger");
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // Connect db
-            logger_1.logger.info('Initializing ORM connection...');
-            //const connection: Connection = await createConnection();
+            console.log('Initializing ORM connection...');
+            const connection = yield typeorm_1.createConnection();
             // Connect redis
             //RedisService.connect();
             // Init express app and routes
             const app = express_1.default();
-            app.get('/api/v1/', (req, res) => {
-                res.send('Hello World!');
-            });
-            //initRestRoutes(app);
+            routes_1.initRestRoutes(app);
             const port = globals_1.env.NODE_PORT;
             app.listen(port, () => {
                 logger_1.logger.info(`Example app listening on port ${port} in ${globals_1.env.NODE_ENV} mode`);
+                console.log(`Example app listening on port ${port} in ${globals_1.env.NODE_ENV} mode`);
             });
         }
         catch (err) {

@@ -19,7 +19,7 @@ import { RedisService } from './services/redis';
 	try {
 		// Connect db
 		console.log('Initializing ORM connection...');
-		//const connection: Connection = await createConnection();
+		const connection: Connection = await createConnection();
 
 		// Connect redis
 		//RedisService.connect();
