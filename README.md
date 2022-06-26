@@ -8,20 +8,23 @@ Express-Nodejs Rest API.
 
 3. npm start
 
+## End-point
+https://nout-api.herokuapp.com/api/v1
+
 ## Routes
-post /api/v1/register {expected json data: email, firstname, lastname, password, co, street, hauseNr, zip, city, country}
+post /register {expected json data: email, firstname, lastname, password, co, street, hauseNr, zip, city, country}
 
-post /api/v1/auth/signin {expected json data: email, password}
+post /auth/signin {expected json data: email, password}
 
-get /api/v1/users
+get /users
 
-get /api/v1/users/:userId
+get /users/:userId
 
-post /api/v1/users/search {expected json data: email}
+post /users/search {expected json data: email}
 
-get /api/v1/interests (returens list of interests)
+get /interests (returens list of interests)
 
-post /api/v1/users/interests/:userId {expected json data: interestName}
+post /users/interests/:userId {expected json data: interestName}
 
 
 ## Reference code
