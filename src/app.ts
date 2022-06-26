@@ -18,7 +18,7 @@ import { RedisService } from './services/redis';
 (async function main() {
 	try {
 		// Connect db
-		logger.info('Initializing ORM connection...');
+		console.log('Initializing ORM connection...');
 		//const connection: Connection = await createConnection();
 
 		// Connect redis
@@ -33,6 +33,7 @@ import { RedisService } from './services/redis';
 
 		app.listen(port, () => {
 			logger.info(`Example app listening on port ${port} in ${env.NODE_ENV} mode`)
+			console.log(`Example app listening on port ${port} in ${env.NODE_ENV} mode`)
 		  }); 
 
 	} catch (err) {
