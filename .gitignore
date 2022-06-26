@@ -81,8 +81,8 @@ typings/
 
 # Nuxt.js build / generate output
 #.nuxt
-dist/
-src
+dist
+
 
 # Gatsby files
 .cache/
@@ -109,4 +109,4 @@ src
 .github
 
 #env
-*.env
+.env
