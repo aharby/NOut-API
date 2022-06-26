@@ -1,8 +1,9 @@
 import 'reflect-metadata';
 
 // Set env variables from .env file
+
 import { config } from 'dotenv';
-config();
+if (process.env.NODE_ENV !== 'production') config();
 
 import express from 'express';
 import { initRestRoutes } from './api/routes';
