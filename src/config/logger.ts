@@ -39,14 +39,14 @@ export const logger = createLogger({
 	]
 });
 
-if (env.NODE_ENV !== 'production') {
-	logger.add(
-		new transports.Console({
-			format: format.combine(
-				format.colorize(),
-				format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
-			),
-			level: 'debug'
-		})
-	);
-}
+
+logger.add(
+	new transports.Console({
+		format: format.combine(
+			format.colorize(),
+			format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
+		),
+		level: 'debug'
+	})
+);
+
